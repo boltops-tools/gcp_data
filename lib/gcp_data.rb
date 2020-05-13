@@ -15,7 +15,6 @@ module GcpData
   memoize :region
 
   def gcloud_config(key)
-    puts "hello"
     check_gcloud_installed!
     `gcloud config get-value #{key}`.strip
   end
