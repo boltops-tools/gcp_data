@@ -1,3 +1,4 @@
+require "json"
 require "memoist"
 
 module GcpData
@@ -5,18 +6,34 @@ module GcpData
   extend Memoist
 
   def project
-    gcloud_config("core/project")
+    ENV['GOOGLE_PROJECT'] || creds("project_id") || gcloud_config("core/project") || raise("Unable to look up google project_id")
   end
   memoize :project
 
   def region
-    gcloud_config("compute/region")
+    ENV['GOOGLE_REGION'] || gcloud_config("compute/region") || 'us-central1'
   end
   memoize :region
 
+  def zone
+    ENV['GOOGLE_ZONE'] || gcloud_config("compute/zone") || 'us-central1a'
+  end
+  memoize :zone
+
+  def creds(name)
+    credentials[name] if credentials
+  end
+
+  def credentials
+    path = ENV['GOOGLE_APPLICATION_CREDENTIALS']
+    JSON.load(IO.read(path)) if path && File.exist?(path)
+  end
+  memoize :credentials
+
   def gcloud_config(key)
     check_gcloud_installed!
-    `gcloud config get-value #{key}`.strip
+    val = `gcloud config get-value #{key}`.strip
+    val unless val == ''
   end
 
   def check_gcloud_installed!
