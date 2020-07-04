@@ -33,7 +33,7 @@ This library will return prjoect and region info using different sources with th
 
 1. Environment variables: GOOGLE_PROJECT, GOOGLE_REGION, GOOGLE_ZONE
 2. Google Credentials file: only project id available from the GOOGLE\_APPLICATION_CREDENTIALS file
-3. CLI: gcloud
+3. CLI: gcloud: project, region, and zone available
 4. Defaults: region=us-central1 and zone==us-central1a
 
 ### 1. Environment variables
