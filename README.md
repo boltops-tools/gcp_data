@@ -29,7 +29,7 @@ GcpData.region
 
 ## Precedence
 
-This library will return prjoect and region info using different sources with this precedence:
+This library will return project and region info using different sources with this precedence:
 
 1. Environment variables: GOOGLE_PROJECT, GOOGLE_REGION, GOOGLE_ZONE
 2. Google Credentials file: only project id available from the GOOGLE\_APPLICATION_CREDENTIALS file
@@ -68,11 +68,11 @@ The commands saves to a file in ~/.config/gcloud. The file looks something like 
 
 ### 4. Defaults
 
-The library will fallback to default values when it's unable to lookup the region and zone. The default values are:
+The library will fall back to default values when it's unable to lookup the region and zone. The default values are:
 
     region=us-central1
     zone==us-central1a
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/tongueroo/gcp_data.
+Bug reports and pull requests are welcome on GitHub at https://github.com/boltops-tools/gcp_data.
