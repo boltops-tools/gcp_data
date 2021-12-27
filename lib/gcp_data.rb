@@ -6,17 +6,17 @@ module GcpData
   extend Memoist
 
   def project
-    ENV['GOOGLE_PROJECT'] || gcloud_config("core/project") || creds("project_id") || raise("Unable to look up google project_id")
+    ENV['GOOGLE_PROJECT'] ||= gcloud_config("core/project") || creds("project_id") || raise("Unable to look up google project_id")
   end
   memoize :project
 
   def region
-    ENV['GOOGLE_REGION'] || gcloud_config("compute/region") || 'us-central1'
+    ENV['GOOGLE_REGION'] ||= gcloud_config("compute/region") || 'us-central1'
   end
   memoize :region
 
   def zone
-    ENV['GOOGLE_ZONE'] || gcloud_config("compute/zone") || 'us-central1a'
+    ENV['GOOGLE_ZONE'] ||= gcloud_config("compute/zone") || 'us-central1a'
   end
   memoize :zone
 
@@ -41,10 +41,8 @@ module GcpData
       puts "RUNNING: #{command}" if ENV['GCP_DATA_DEBUG']
       val = `#{command}`.strip
       val unless ['', '(unset)'].include?(val)
-    else
-      unless env_vars_set?
-        error_message
-      end
+    elsif !env_vars_set?
+      error_message
     end
   end
 
